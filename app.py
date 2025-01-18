@@ -1,6 +1,5 @@
 # Importando bibliotecas essenciais para o funcionamento do script
-import os 
-from apikey import apikey, serper_api_key # Importando chaves de API de um arquivo externo
+import os
 import streamlit as st # Importando a biblioteca Streamlit para criação de aplicações web
 from langchain.llms import OpenAI # Importando o modelo de linguagem da OpenAI
 from langchain.prompts import PromptTemplate # Importando a classe para templates de prompt
