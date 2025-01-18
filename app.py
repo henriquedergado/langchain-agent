@@ -36,9 +36,6 @@ prompt = st.text_input('Escreva aqui o tema do conteúdo') # Campo de entrada pa
 openai_api_key = st.text_input("Enter your OpenAI API Key", type='password')
 serper_api_key = st.text_input("Enter your Serper API Key", type='password')
 
-# Configurando a chave de API da OpenAI no ambiente
-os.environ['OPENAI_API_KEY'] = openai_api_key
-
 # Definindo templates de prompt para o título do vídeo e o roteiro
 title_template = PromptTemplate(
     input_variables = ['topic'], 
@@ -55,7 +52,7 @@ title_memory = ConversationBufferMemory(input_key='topic', memory_key='chat_hist
 script_memory = ConversationBufferMemory(input_key='title', memory_key='chat_history')
 
 # Inicializando o modelo de linguagem com uma temperatura de 0.9
-llm = OpenAI(temperature=0.9)
+llm = OpenAI(temperature=0.9, model="gpt-4o-mini")
 # Configurando a cadeia de LLM para gerar títulos
 title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True, output_key='title', memory=title_memory)
 # Configurando a cadeia de LLM para gerar roteiros
@@ -66,6 +63,9 @@ google_search = SerperAPIWrapper(api_key=serper_api_key)
 
 # Mostrando os resultados na tela se houver um prompt
 if prompt: 
+    # Configurando a chave de API da OpenAI no ambiente
+    os.environ['OPENAI_API_KEY'] = openai_api_key
+
     title = title_chain.run(prompt) # Gera o título do vídeo
     google_research = google_search.run(prompt) # Realiza a pesquisa no Google
     script = script_chain.run(title=title, google_research=google_research) # Gera o roteiro do vídeo
