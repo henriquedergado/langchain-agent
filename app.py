@@ -55,7 +55,7 @@ title_memory = ConversationBufferMemory(input_key='topic', memory_key='chat_hist
 script_memory = ConversationBufferMemory(input_key='title', memory_key='chat_history')
 
 # Inicializando o modelo de linguagem com uma temperatura de 0.9
-llm = OpenAI(temperature=0.9, model="gpt-4o-mini")
+llm = OpenAI(temperature=0.9)
 # Configurando a cadeia de LLM para gerar títulos
 title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True, output_key='title', memory=title_memory)
 # Configurando a cadeia de LLM para gerar roteiros
