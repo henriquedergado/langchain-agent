@@ -32,8 +32,6 @@ class SerperAPIWrapper:
 
 # Configurando o título da aplicação no Streamlit
 st.title('🦜🔗 YouTube GPT Creator')
-openai_api_key = st.text_input("Enter your OpenAI API Key", type='password')
-serper_api_key = st.text_input("Enter your Serper API Key", type='password')
 prompt = st.text_input('Escreva aqui o tema do conteúdo') # Campo de entrada para o usuário escrever o tema
 
 # Definindo templates de prompt para o título do vídeo e o roteiro
@@ -53,9 +51,6 @@ script_memory = ConversationBufferMemory(input_key='title', memory_key='chat_his
 
 # Mostrando os resultados na tela se houver um prompt
 if prompt:
-    # Configurando a chave de API da OpenAI no ambiente
-    os.environ['OPENAI_API_KEY'] = openai_api_key
-    
     # Inicializando o modelo de linguagem com uma temperatura de 0.9
     llm = OpenAI(temperature=0.9)
     # Configurando a cadeia de LLM para gerar títulos
@@ -64,7 +59,10 @@ if prompt:
     script_chain = LLMChain(llm=llm, prompt=script_template, verbose=True, output_key='script', memory=script_memory)
 
     # Inicializando o wrapper da API Serper.dev
-    google_search = SerperAPIWrapper(api_key=serper_api_key)
+    google_search = SerperAPIWrapper(api_key=st.secrets["serper_api_key"])
+
+    # Configurando a chave de API da OpenAI no ambiente
+    os.environ['OPENAI_API_KEY'] = st.secrets["openai_api_key"]
 
     title = title_chain.run(prompt) # Gera o título do vídeo
     google_research = google_search.run(prompt) # Realiza a pesquisa no Google
