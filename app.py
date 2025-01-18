@@ -53,6 +53,9 @@ script_memory = ConversationBufferMemory(input_key='title', memory_key='chat_his
 
 # Mostrando os resultados na tela se houver um prompt
 if prompt:
+    # Configurando a chave de API da OpenAI no ambiente
+    os.environ['OPENAI_API_KEY'] = openai_api_key
+    
     # Inicializando o modelo de linguagem com uma temperatura de 0.9
     llm = OpenAI(temperature=0.9)
     # Configurando a cadeia de LLM para gerar títulos
@@ -62,9 +65,6 @@ if prompt:
 
     # Inicializando o wrapper da API Serper.dev
     google_search = SerperAPIWrapper(api_key=serper_api_key)
-
-    # Configurando a chave de API da OpenAI no ambiente
-    os.environ['OPENAI_API_KEY'] = openai_api_key
 
     title = title_chain.run(prompt) # Gera o título do vídeo
     google_research = google_search.run(prompt) # Realiza a pesquisa no Google
