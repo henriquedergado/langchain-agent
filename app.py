@@ -32,9 +32,9 @@ class SerperAPIWrapper:
 
 # Configurando o título da aplicação no Streamlit
 st.title('🦜🔗 YouTube GPT Creator')
-prompt = st.text_input('Escreva aqui o tema do conteúdo') # Campo de entrada para o usuário escrever o tema
 openai_api_key = st.text_input("Enter your OpenAI API Key", type='password')
 serper_api_key = st.text_input("Enter your Serper API Key", type='password')
+prompt = st.text_input('Escreva aqui o tema do conteúdo') # Campo de entrada para o usuário escrever o tema
 
 # Definindo templates de prompt para o título do vídeo e o roteiro
 title_template = PromptTemplate(
