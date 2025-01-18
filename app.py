@@ -51,18 +51,18 @@ script_template = PromptTemplate(
 title_memory = ConversationBufferMemory(input_key='topic', memory_key='chat_history')
 script_memory = ConversationBufferMemory(input_key='title', memory_key='chat_history')
 
-# Inicializando o modelo de linguagem com uma temperatura de 0.9
-llm = OpenAI(temperature=0.9)
-# Configurando a cadeia de LLM para gerar títulos
-title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True, output_key='title', memory=title_memory)
-# Configurando a cadeia de LLM para gerar roteiros
-script_chain = LLMChain(llm=llm, prompt=script_template, verbose=True, output_key='script', memory=script_memory)
-
-# Inicializando o wrapper da API Serper.dev
-google_search = SerperAPIWrapper(api_key=serper_api_key)
-
 # Mostrando os resultados na tela se houver um prompt
-if prompt: 
+if prompt:
+    # Inicializando o modelo de linguagem com uma temperatura de 0.9
+    llm = OpenAI(temperature=0.9)
+    # Configurando a cadeia de LLM para gerar títulos
+    title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True, output_key='title', memory=title_memory)
+    # Configurando a cadeia de LLM para gerar roteiros
+    script_chain = LLMChain(llm=llm, prompt=script_template, verbose=True, output_key='script', memory=script_memory)
+
+    # Inicializando o wrapper da API Serper.dev
+    google_search = SerperAPIWrapper(api_key=serper_api_key)
+
     # Configurando a chave de API da OpenAI no ambiente
     os.environ['OPENAI_API_KEY'] = openai_api_key
 
